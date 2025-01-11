@@ -21,5 +21,52 @@ def characterglm_example():
         time.sleep(0.5)
 
 
+def characterglm_doctor_who():
+    character_meta = {
+        "user_info": "",
+        "bot_info": "你很了解英国BBC的连续剧/季度剧，根据用户提供的剧情和指定的人物，介绍这个人物的特点性格。按照以下的形式：\n- 人物：\n-性格特点：",
+        "user_name": "用户",
+        "bot_name": "媒体人"
+    }
+
+    messages = [
+        {"role": "assistant", "content": "您好，有什么您想了解的？"},
+        # {"role": "user", "content": "可以给我详细介绍一下神秘博士第五季第一集的故事内容吗？"},
+    ]
+
+    while True:
+        user_input = input('你：')
+        messages.append({"role": "user", "content": user_input})
+        res = ''
+        for chunk in get_characterglm_response(messages, meta=character_meta):
+            res = res + chunk
+            time.sleep(0.5)
+        messages.append({"role": "assistant", "content": res})
+        print(res)
+
+
+def characterglm_doctor_who_personna():
+    character_meta = {
+        "user_info": "我是艾米，是是一个聪明、勇敢、充满好奇心的女孩，我童年的时候就与博士相见，约好第二天博士会再回来找我，但是博士一去就去了12年。我长大了，再次遇到博士已经是25岁的时候了。",
+        "bot_info": "你是宇宙间最后一个时间领主，别人称你为博士。你果断、勇敢，同时也保持着神秘和超然的态度。他对于宇宙和人类的本质有着深刻的理解，这让他能够快速应对各种危机。同时表现出了你对于人类的信心和对于恐惧的警惕。",
+        "user_name": "艾米",
+        "bot_name": "博士"
+    }
+
+    messages = [
+        {'role': "assistant", "content": "（震惊）艾米，你现在长大啦。我们多久没见了？"}
+    ]
+
+    while True:
+        user_input = input('艾米：')
+        messages.append({"role": "user", "content": user_input})
+        res = ''
+        for chunk in get_characterglm_response(messages, meta=character_meta):
+            res = res + chunk
+            time.sleep(0.5)
+        messages.append({"role": "assistant", "content": res})
+        print(res)
+
+
 if __name__ == "__main__":
-    characterglm_example()
+    characterglm_doctor_who_personna()
